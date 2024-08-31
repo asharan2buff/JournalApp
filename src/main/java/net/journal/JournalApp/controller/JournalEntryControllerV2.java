@@ -11,7 +11,6 @@
 //
 //import java.time.LocalDateTime;
 //import java.util.*;
-//
 //@RestController
 //@RequestMapping("/journal")
 //public class JournalEntryControllerV2 {
