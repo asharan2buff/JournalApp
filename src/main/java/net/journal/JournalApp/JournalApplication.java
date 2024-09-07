@@ -20,5 +20,4 @@ public class JournalApplication {
 	public PlatformTransactionManager PlatformTransaction(MongoDatabaseFactory dbFactory){
 		return new MongoTransactionManager(dbFactory);
 	}
-
 }
