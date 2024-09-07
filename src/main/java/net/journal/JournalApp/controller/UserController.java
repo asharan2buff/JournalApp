@@ -18,10 +18,10 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    @GetMapping
-    public List<User> getUser(){
-        return userService.getAll();
-    }
+//    @GetMapping
+//    public List<User> getUser(){
+//        return userService.getAll();
+//    }
 
     @PutMapping//in basic auth give username and password
     public ResponseEntity<?> updateUser(@RequestBody User user){
