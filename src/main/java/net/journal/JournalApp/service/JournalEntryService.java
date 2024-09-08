@@ -1,9 +1,11 @@
 package net.journal.JournalApp.service;
 
+import lombok.extern.slf4j.Slf4j;
 import net.journal.JournalApp.entity.JournalEntry;
 import net.journal.JournalApp.entity.User;
 import net.journal.JournalApp.repository.JournalEntryRepo;
 import org.bson.types.ObjectId;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
@@ -12,6 +14,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
+@Slf4j
 @Component
 public class JournalEntryService {
     @Autowired
@@ -19,6 +22,7 @@ public class JournalEntryService {
 
     @Autowired
     private UserService userService;
+
 
     @Transactional//to achieve atomicity..everything is considered 1 op...if anything fails...everything rolled back.
     public void saveJournalEntry(JournalEntry journalEntry, String username){
@@ -33,6 +37,7 @@ public class JournalEntryService {
     public void saveJournalEntry(JournalEntry journalEntry){
         journalEntry.setDate(LocalDateTime.now());
         journalEntryRepo.save(journalEntry);
+        log.info("Used slf4j logging");//no need to create static final Logger. Just write slf4j and use log. anything to log.
     }
     public List<JournalEntry> getAll(){
         return journalEntryRepo.findAll();

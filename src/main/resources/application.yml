@@ -1,0 +1,10 @@
+spring:
+  profiles:
+    active: dev
+    #change to dev or prod to specify active env in main app
+
+logging:
+  level:
+    net:
+      journal:
+        JournalApp: DEBUG #will print debug logs as well
