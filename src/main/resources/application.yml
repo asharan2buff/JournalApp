@@ -8,3 +8,9 @@ logging:
     net:
       journal:
         JournalApp: DEBUG #will print debug logs as well
+
+weather:
+  api:
+    key: 1ATJysW90wYgLLWJaRXoOBowUAAvD67Q
+  location:
+    key: 2146519 # this is Amherst
