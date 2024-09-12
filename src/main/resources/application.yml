@@ -2,12 +2,24 @@ spring:
   profiles:
     active: dev
     #change to dev or prod to specify active env in main app
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: ashutosh98sharan@gmail.com
+    password: vwla jszt muwu kehl
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
 
 logging:
   level:
     net:
       journal:
-        JournalApp: DEBUG #will print debug logs as well
+        JournalApp: DEBUG #will print debug logs as well\
+
 
 weather:
   api:
