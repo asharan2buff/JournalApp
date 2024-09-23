@@ -31,21 +31,28 @@ public class WeatherService {
     @Autowired
     private AppCache appCache;
 
+    @Autowired
+    private RedisService redisService;
+
     public WeatherResponse getFirstWeatherInfo() {
-        String finalAPI = appCache.appCache.get(AppCache.keys.WEATHER_API.toString()).replace(Placeholders.LOCATION_KEY, locationKey).replace(Placeholders.API_KEY, apiKey);
-
-        ResponseEntity<List<WeatherResponse>> response = restTemplate.exchange(//execute HTTP requests and capture responses
-                finalAPI,
-                HttpMethod.GET,
-                null,//for post call we need to pass requestentity here. Play with 11labs api..
-                new ParameterizedTypeReference<List<WeatherResponse>>() {}
-        );
-
-        List<WeatherResponse> weatherList = response.getBody();
-
-        if (weatherList != null && !weatherList.isEmpty()) {
-            // Return the first weather info from the list
-            return weatherList.get(0);
+        WeatherResponse weatherResponse = redisService.get("weather_of_amherst",WeatherResponse.class);
+        if(weatherResponse!=null){
+            return weatherResponse;
+        }
+        else
+        {
+            String finalAPI = appCache.appCache.get(AppCache.keys.WEATHER_API.toString()).replace(Placeholders.LOCATION_KEY, locationKey).replace(Placeholders.API_KEY, apiKey);
+            ResponseEntity<List<WeatherResponse>> response = restTemplate.exchange(//execute HTTP requests and capture responses
+                    finalAPI,
+                    HttpMethod.GET,
+                    null,//for post call we need to pass requestentity here. Play with 11labs api..
+                    new ParameterizedTypeReference<List<WeatherResponse>>() {});
+            List<WeatherResponse> weatherList = response.getBody();
+            if (weatherList != null && !weatherList.isEmpty()) {
+                redisService.set("weather_of_amherst",weatherList.get(0),300l);
+                // Return the first weather info from the list
+                return weatherList.get(0);
+            }
         }
         return null;
     }
